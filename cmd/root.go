@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/sirupsen/logrus"
@@ -11,6 +12,7 @@ import (
 )
 
 const (
+	version  = "v0"
 	cmdShort = "aws-adfs-login is a simple CLI tool to login to AWS via an ADFS portal"
 	cmdLong  = `
 This simple login utility provides an easy interface for end users to login.
@@ -28,6 +30,14 @@ var (
 			auth.Login(types.Cli)
 		},
 	}
+	versionCmd = &cobra.Command{
+		Use:   "version",
+		Short: "Prints the login tool version.",
+		Long:  "",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("aws-login %s\n", version)
+		},
+	}
 )
 
 func init() {
@@ -42,6 +52,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&types.LoginUser.Domain, "domain", "", "", "Your login ADFS domain.")
 	rootCmd.MarkFlagRequired("region")
 	rootCmd.MarkFlagRequired("idpEntryUrl")
+	rootCmd.AddCommand(versionCmd)
 }
 
 // Primary execution entrypoint for the CLI
