@@ -3,8 +3,6 @@ on:
   pull_request:
 jobs:
   Test:
-    environment:
-      name: ${{ github.ref }}
     runs-on: macos-12
     steps:
       - name: Install go...
@@ -19,8 +17,6 @@ jobs:
           go test -v ./auth/
   
   Build:
-    environment:
-      name: ${{ github.ref }}
     runs-on: macos-12
     needs:
       - Test
