@@ -1,14 +1,11 @@
 package utils
 
 import (
-	"bufio"
-	"fmt"
 	"log"
-	"os"
-
-	"golang.org/x/crypto/ssh/terminal"
 )
 
+// An open error checking function that can be used to return and error message
+// and convenient sys.exit call.
 func Check(err error, msg string) {
 	if err != nil {
 		if msg != "" {
@@ -17,15 +14,4 @@ func Check(err error, msg string) {
 			log.Fatal(err)
 		}
 	}
-}
-
-func Prompt(question string, sensitive bool) interface{} {
-	var input interface{}
-	fmt.Println(question)
-	if sensitive {
-		input, _ = terminal.ReadPassword(0)
-	} else {
-		input, _ = bufio.NewReader(os.Stdin).ReadString('\n')
-	}
-	return input
 }

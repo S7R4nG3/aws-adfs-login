@@ -43,6 +43,12 @@ type XmlAttribute struct {
 	Values []string `xml:"AttributeValue"`
 }
 
+// Primary entrypoint to begin SAML verification - this first accesses the login portal
+// via the provided IDP Entry URL and identifies the Username, Password, and Submit fields.
+// Next, it POSTs the contents of the user's login information to retrieve a SAML response.
+// The response is then decoded and parsed to identify the AWS IAM roles that the user has access
+// to assume, and these roles are written to a global types variable to be accessible by
+// the end user prompts for selection of a specific role.
 func (saml *Saml) Verify() {
 	log := saml.Logger
 	log.Info("Begin Saml request...")
@@ -54,6 +60,8 @@ func (saml *Saml) Verify() {
 	log.Info("Saml verification complete!")
 }
 
+// Orchestrations the login portal authentication with the provided username and
+// password. the request URL and response are written back to the paren SAML struct
 func (saml *Saml) portalLogin() {
 	log := saml.Logger
 	log.Info("Begin Portal login...")
@@ -92,6 +100,8 @@ func (saml *Saml) portalLogin() {
 	log.Info("Portal login complete!")
 }
 
+// Configures retrieval of the SAML response from the login portal and returns this
+// response back to the parent SAML struct.
 func (saml *Saml) assertion() {
 	log := saml.Logger
 	log.Info("Starting SAML assertion parsing...")
@@ -110,6 +120,9 @@ func (saml *Saml) assertion() {
 	log.Info("SAML Assertion complete!")
 }
 
+// Parses the SAML assertion to retrieve the list of AWS IAM roles that the
+// authenticated user has access to assume. These roles are written back to
+// a global types variable to be accessible for user selection prompts.
 func (saml *Saml) parseSamlRoles() {
 	log := saml.Logger
 	log.Info("Begin parsing AWS roles from SAML response...")
@@ -131,6 +144,8 @@ func (saml *Saml) parseSamlRoles() {
 	log.Info("Role parsing complete!")
 }
 
+// General purpose http Client configuration if users provide a
+// CA bundle path.
 func (saml *Saml) newHttpClient() *http.Client {
 	client := &http.Client{}
 	if saml.CABundle != "" {

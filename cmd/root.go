@@ -44,6 +44,7 @@ func init() {
 	rootCmd.MarkFlagRequired("idpEntryUrl")
 }
 
+// Primary execution entrypoint for the CLI
 func Execute() {
 	rootCmd.Execute()
 }

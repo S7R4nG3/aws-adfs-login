@@ -11,7 +11,6 @@ import (
 	"github.com/S7R4nG3/aws-adfs-login/saml"
 	"github.com/S7R4nG3/aws-adfs-login/types"
 	"github.com/S7R4nG3/aws-adfs-login/utils"
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 	"github.com/sirupsen/logrus"
@@ -21,11 +20,15 @@ const (
 	credentialsFile = ".aws/credentials"
 )
 
-type StsApi interface {
-	NewFromConfig(cfg aws.Config, optFns ...func(*sts.Options)) *sts.Client
-	AssumeRoleWithSAML(ctx context.Context, params *sts.AssumeRoleWithSAMLInput, optFns ...func(*sts.Options)) (*sts.AssumeRoleWithSAMLOutput, error)
-}
+// Work in progress to mock the STS Client calls...
+// type StsApi interface {
+// 	NewFromConfig(cfg aws.Config, optFns ...func(*sts.Options)) *sts.Client
+// 	AssumeRoleWithSAML(ctx context.Context, params *sts.AssumeRoleWithSAMLInput, optFns ...func(*sts.Options)) (*sts.AssumeRoleWithSAMLOutput, error)
+// }
 
+// The main login function - this orchestrations login and SAML verification
+// then configures the AWS credentials file with the credentials returned by the
+// AWS STS service.
 func Login(cli types.CLI) {
 	log := cli.Logger
 	fmt.Println(types.Header)
@@ -60,6 +63,8 @@ func Login(cli types.CLI) {
 	f.Write([]byte(content))
 }
 
+// Configures the user's username and password by first checking command line flags
+// then checking for environment variables, and finally prompting the user directly
 func setupCredentials(logger *logrus.Logger) {
 	if types.LoginUser.Username == "" {
 		logger.Debug("Login username not set via command line flags, checking environment variables...")
@@ -99,6 +104,8 @@ func setupCredentials(logger *logrus.Logger) {
 	logger.Debugf("Setup credentials --> Username: %s :: Password: %s :: Domain: %s\n", types.LoginUser.Username, types.LoginUser.Password, types.LoginUser.Domain)
 }
 
+// Configurations the credentials file string to ensure the file is properly formatted with the
+// generated keys to the correct profile and region
 func writeCredentials(creds sts.AssumeRoleWithSAMLOutput, duration int32, profile string, region string) string {
 	strTempl := `
 [{{ .Profile }}]

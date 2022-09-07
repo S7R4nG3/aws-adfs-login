@@ -16,6 +16,7 @@ var (
 	minimumDomainLength   = 6
 )
 
+// Prompts the user for their login username and validates its minimum length
 func Username() string {
 	validate := func(input string) error {
 		if len(input) < minimumUsernameLength {
@@ -36,6 +37,7 @@ func Username() string {
 	return username
 }
 
+// Prompts the user for their login password and validates its minimum length
 func Password() string {
 	validate := func(input string) error {
 		if len(input) < minimumPasswordLength {
@@ -57,6 +59,7 @@ func Password() string {
 	return password
 }
 
+// Prompts the user for their selected domain and validates its minimum length
 func Domain() string {
 	validate := func(input string) error {
 		if len(input) < minimumDomainLength {
@@ -77,6 +80,8 @@ func Domain() string {
 	return domain
 }
 
+// Templates out the selection prompt for AWS IAM roles that the
+// now authenticated user has access to and can assume
 func RoleSelect(roles []types.Role) types.Role {
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ .Name }}?",
