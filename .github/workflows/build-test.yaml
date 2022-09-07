@@ -4,9 +4,9 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: macos-12
     steps:
-      - run: curl -o go.tar.gz https://go.dev/dl/go1.19.1.darwin-amd64.tar.gz
-      - run: tar -xzf go.tar.gz
-      - run: export PATH=$(pwd)/go/bin:$PATH
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "1.19.1"
       - run: go version
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
