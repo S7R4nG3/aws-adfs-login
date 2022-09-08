@@ -41,10 +41,9 @@ jobs:
           go-version: "1.19.1"
       - name: Checkout repo...
         uses: actions/checkout@v3
-      - run: export PATH=$(pwd):$PATH
       - name: Test building the binary...
         run: go build -o aws-login .
-      - run: aws-login version
+      - run: ./aws-login version
   
   Build-Windows:
     runs-on: windows-latest
@@ -57,7 +56,6 @@ jobs:
           go-version: "1.19.1"
       - name: Checkout repo...
         uses: actions/checkout@v3
-      - run: export PATH=$(pwd):$PATH
       - name: Test building the binary...
         run: go build -o aws-login .
-      - run: aws-login.exe version
+      - run: ./aws-login.exe version
