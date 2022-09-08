@@ -8,3 +8,7 @@ docs: install
 	gomarkdoc ./saml/ > ./saml/README.md
 	gomarkdoc ./types/ > ./types/README.md
 	gomarkdoc ./utils/ > ./utils/README.md
+
+test:
+	go test -v ./auth/
+	go test -v ./saml/

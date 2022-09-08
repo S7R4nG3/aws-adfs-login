@@ -4,11 +4,42 @@ on:
     tags:
       - v*
 jobs:
+  Test:
+    runs-on: macos-12
+    steps:
+      - name: Install go...
+        uses: actions/setup-go@v3
+        with:
+          go-version: $GO_VERSION
+      - name: Checkout repo...
+        uses: actions/checkout@v3
+      - name: Run Tests...
+        run: |
+          go test -v ./saml/
+          go test -v ./auth/
+  
+  Test-Windows:
+    runs-on: windows-latest
+    steps:
+      - name: Install go...
+        uses: actions/setup-go@v3
+        with:
+          go-version: $GO_VERSION
+      - name: Checkout repo...
+        uses: actions/checkout@v3
+      - name: Run Tests...
+        run: |
+          go test -v ./saml/
+          go test -v ./auth/
+
   Release:
     name: Upload Release Asset
     runs-on: macos-12
     environment:
       name: ${{ github.ref_name }}
+    needs:
+      - Test
+      - Test-Windows
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

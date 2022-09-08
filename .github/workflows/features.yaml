@@ -1,6 +1,8 @@
 name: new feature
 on:
   pull_request:
+env:
+  GO_VERSION: "1.19.1"
 jobs:
   Test:
     runs-on: macos-12
@@ -8,7 +10,7 @@ jobs:
       - name: Install go...
         uses: actions/setup-go@v3
         with:
-          go-version: "1.19.1"
+          go-version: $GO_VERSION
       - name: Checkout repo...
         uses: actions/checkout@v3
       - name: Run Tests...
@@ -22,7 +24,7 @@ jobs:
       - name: Install go...
         uses: actions/setup-go@v3
         with:
-          go-version: "1.19.1"
+          go-version: $GO_VERSION
       - name: Checkout repo...
         uses: actions/checkout@v3
       - name: Run Tests...
@@ -38,7 +40,7 @@ jobs:
       - name: Install go...
         uses: actions/setup-go@v3
         with:
-          go-version: "1.19.1"
+          go-version: $GO_VERSION
       - name: Checkout repo...
         uses: actions/checkout@v3
       - name: Test building the binary...
@@ -53,7 +55,7 @@ jobs:
       - name: Install go...
         uses: actions/setup-go@v3
         with:
-          go-version: "1.19.1"
+          go-version: $GO_VERSION
       - name: Checkout repo...
         uses: actions/checkout@v3
       - name: Test building the binary...
