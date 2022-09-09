@@ -48,12 +48,12 @@ jobs:
       - name: Build project - Mac
         run: |
           go build -o aws-login .
-          zip aws-login-darwin-${{ github.ref_name }} aws-login
+          zip aws-login-darwin aws-login
       
       - name: Build project - Windows
         run: |
           GOOS=windows GOARCH=amd64 go build -o aws-login.exe .
-          zip aws-login-windows-${{ github.ref_name }} aws-login.exe
+          zip aws-login-windows aws-login.exe
 
       - name: Create Release
         id: create_release
@@ -73,8 +73,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./aws-login-darwin-${{ github.ref_name }}.zip
-          asset_name: aws-login-darwin-${{ github.ref_name }}.zip
+          asset_path: ./aws-login-darwin.zip
+          asset_name: aws-login-darwin.zip
           asset_content_type: application/zip
 
       - name: Upload Release Asset - Windows
@@ -84,6 +84,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./aws-login-windows-${{ github.ref_name }}.zip
-          asset_name: aws-login-windows-${{ github.ref_name }}.zip
+          asset_path: ./aws-login-windows.zip
+          asset_name: aws-login-windows.zip
           asset_content_type: application/zip
