@@ -4,7 +4,7 @@ A simple login tool that allows you to authenticate through Active Directory Fed
 
 ## Installation
 
-Simply download the latest version of the binary from the [Releases]() page and put it in your PATH!
+Simply download the latest version of the binary from the [Releases](https://github.com/S7R4nG3/aws-adfs-login/releases) page and put it in your PATH!
 
 ## General Usage
 

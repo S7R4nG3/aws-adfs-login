@@ -80,7 +80,7 @@ func (saml *Saml) portalLogin() {
 	})
 
 	formData := url.Values{}
-	userWithDomain := types.LoginUser.Domain + "\\" + types.LoginUser.Username
+	userWithDomain := types.LoginUser.Domain + `\` + types.LoginUser.Username
 
 	for _, n := range inputs {
 		name := scrape.Attr(n, "name")
