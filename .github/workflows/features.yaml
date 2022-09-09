@@ -50,7 +50,7 @@ jobs:
   Build-Windows:
     runs-on: windows-latest
     needs:
-      - Test
+      - Test-Windows
     steps:
       - name: Install go...
         uses: actions/setup-go@v3
